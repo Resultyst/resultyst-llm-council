@@ -105,20 +105,6 @@ This repository significantly extends the original implementation with the follo
 
 ---
 
-## Project Structure
-├── backend/
-│ ├── main.py
-│ ├── council.py
-│ ├── storage.py
-│ ├── groq_client.py
-│ └── config.py
-├── frontend/
-│ ├── src/
-│ │ ├── components/
-│ │ ├── App.jsx
-│ │ └── api.js
-└── README.md
-
 This project is based on the original **LLM Council** repository.
 The core idea and initial implementation belong to the original author.
 
