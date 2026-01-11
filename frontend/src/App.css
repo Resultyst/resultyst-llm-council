@@ -1,0 +1,430 @@
+/* Global reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body, #root {
+  height: 100%;
+  width: 100%;
+}
+
+/* App layout */
+.app {
+  display: flex;
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden;
+  background: #ffffff;
+  color: #333;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+}
+
+.main-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  overflow: hidden;
+}
+
+/* Empty chat view (welcome screen) */
+.empty-chat-view {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center; /* horizontal */
+  align-items: center;     /* vertical */
+  text-align: center;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  height: 100%;
+  width: 100%;
+}
+
+.empty-chat-wrapper {
+  display: flex;
+  justify-content: center;   /* horizontal */
+  align-items: center;       /* vertical */
+  height: 100%;              /* or 100vh */
+  width: 100%;
+}
+.empty-chat-content {
+       /* keeps "Welcome to LLM Council" on one line */
+  text-align: center;
+  padding: 40px;
+  max-width: none;
+  margin: 0 auto; 
+  width: auto;
+}
+
+.empty-chat-content h1 {
+  font-size: 48px;
+  margin-bottom: 20px;
+  font-weight: 700;
+}
+
+.empty-chat-content p {
+  font-size: 18px;
+  margin-bottom: 30px;
+  opacity: 0.9;
+  line-height: 1.5;
+}
+
+.new-conversation-btn {
+  background: white;
+  color: #667eea;
+  border: none;
+  padding: 12px 24px;
+  font-size: 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: transform 0.2s, box-shadow 0.2s;
+  min-width: 200px;
+  
+}
+
+.new-conversation-btn:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+}
+
+.new-conversation-btn:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.hint {
+  margin-top: 20px;
+  font-size: 14px;
+  opacity: 0.7;
+}
+
+/* Toast Container */
+.toast-container {
+  position: fixed;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10000;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  max-width: 400px;
+  pointer-events: none;
+}
+
+/* Toast */
+.toast {
+  width: 100%;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+  overflow: hidden;
+  animation: toastSlideIn 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  pointer-events: auto;
+}
+
+.toast-success {
+  border-top: 4px solid #4CAF50;
+}
+
+.toast-error {
+  border-top: 4px solid #F44336;
+}
+
+.toast-info {
+  border-top: 4px solid #2196F3;
+}
+
+.toast-header {
+  display: flex;
+  align-items: center;
+  padding: 12px 16px;
+  background: #f8f9fa;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.toast-icon {
+  margin-right: 10px;
+  display: flex;
+  align-items: center;
+}
+
+.toast-success .toast-icon {
+  color: #4CAF50;
+}
+
+.toast-error .toast-icon {
+  color: #F44336;
+}
+
+.toast-info .toast-icon {
+  color: #2196F3;
+}
+
+.toast-title {
+  font-weight: 600;
+  font-size: 14px;
+  color: #333;
+  flex: 1;
+}
+
+.toast-close {
+  background: none;
+  border: none;
+  padding: 4px;
+  cursor: pointer;
+  color: #999;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+}
+
+.toast-close:hover {
+  background: rgba(0, 0, 0, 0.05);
+  color: #666;
+}
+
+.toast-body {
+  padding: 16px;
+  font-size: 14px;
+  color: #555;
+  line-height: 1.5;
+}
+
+.toast-progress {
+  height: 3px;
+  background: #f0f0f0;
+  overflow: hidden;
+}
+
+.toast-progress-bar {
+  height: 100%;
+  background: currentColor;
+  width: 100%;
+  animation: toastProgress linear forwards;
+  transform-origin: left;
+}
+
+.toast-success .toast-progress-bar {
+  background: #4CAF50;
+}
+
+.toast-error .toast-progress-bar {
+  background: #F44336;
+}
+
+.toast-info .toast-progress-bar {
+  background: #2196F3;
+}
+
+@keyframes toastSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes toastProgress {
+  from {
+    transform: scaleX(1);
+  }
+  to {
+    transform: scaleX(0);
+  }
+}
+
+/* Exit animation */
+.toast-exit {
+  animation: toastSlideOut 0.3s ease forwards;
+}
+
+@keyframes toastSlideOut {
+  from {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+}
+
+/* Responsive adjustments for layout */
+@media (max-width: 768px) {
+  .app {
+    flex-direction: column;
+  }
+  
+  .main-content {
+    height: calc(100vh - 60px); /* adjust based on sidebar height */
+  }
+  
+  .empty-chat-content h1 {
+    font-size: 32px;
+    white-space: nowrap;
+  }
+  
+  .empty-chat-content p {
+    font-size: 16px;
+  }
+}
+
+/* Responsive adjustments for toasts */
+@media (max-width: 768px) {
+  .toast-container {
+    top: 10px;
+    padding: 0 10px;
+    max-width: 100%;
+  }
+  
+  .toast {
+    width: 100%;
+  }
+  
+  .toast-header {
+    padding: 10px 12px;
+  }
+  
+  .toast-body {
+    padding: 12px;
+  }
+}
+/* Sidebar Toggle Button */
+.sidebar-toggle {
+  position: fixed;
+  top: 25px;
+  left: 230px;
+  z-index: 1000;
+  background: #4a90e2;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 8px 12px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: all 0.3s;
+  box-shadow: 0 2px 8px rgba(74, 144, 226, 0.3);
+}
+
+.sidebar-toggle:hover {
+  background: #357abd;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(74, 144, 226, 0.4);
+}
+
+.sidebar-toggle:active {
+  transform: translateY(0);
+}
+
+.sidebar-toggle.sidebar-hidden {
+  background: #666;
+  top: 25px;
+  left: 230px;
+}
+
+.sidebar-toggle.sidebar-hidden:hover {
+  background: #555;
+}
+
+.toggle-text {
+  white-space: nowrap;
+}
+
+/* Main content when sidebar is hidden */
+.main-content.full-width {
+  width: 100vw;
+  margin-left: 0;
+}
+
+/* Show conversations button in empty state */
+.show-conversations-btn {
+  margin: 20px 0;
+  padding: 12px 20px;
+  background: #f0f7ff;
+  color: #4a90e2;
+  border: 2px solid #4a90e2;
+  border-radius: 8px;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.show-conversations-btn:hover {
+  background: #4a90e2;
+  color: white;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(74, 144, 226, 0.3);
+}
+
+/* Responsive sidebar toggle */
+@media (max-width: 768px) {
+  .sidebar-toggle {
+    top: 10px;
+    left: 10px;
+    padding: 6px 10px;
+    font-size: 13px;
+  }
+  
+  .toggle-text {
+    display: none; /* Hide text on mobile, show only icon */
+  }
+  
+  .sidebar-toggle {
+    padding: 8px;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    justify-content: center;
+  }
+}
+
+/* Sidebar animation */
+.sidebar {
+  transition: transform 0.3s ease;
+}
+
+/* When sidebar is hidden on mobile, it slides out */
+@media (max-width: 768px) {
+  .sidebar:not(.sidebar-visible) {
+    transform: translateX(-100%);
+  }
+  
+  .sidebar-toggle {
+    display: flex; /* Always show on mobile */
+  }
+}
+
+/* Keyboard shortcut hint */
+.sidebar-toggle::after {
+  font-size: 11px;
+  opacity: 0.7;
+  margin-left: 4px;
+}
+
+@media (max-width: 768px) {
+  .sidebar-toggle::after {
+    display: none;
+  }
+}
