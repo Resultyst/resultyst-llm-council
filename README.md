@@ -2,86 +2,133 @@
 
 ![llmcouncil](header.jpg)
 
-The idea of this repo is that instead of asking a question to your favorite LLM provider (e.g. OpenAI GPT 5.1, Google Gemini 3.0 Pro, Anthropic Claude Sonnet 4.5, xAI Grok 4, eg.c), you can group them into your "LLM Council". This repo is a simple, local web app that essentially looks like ChatGPT except it uses OpenRouter to send your query to multiple LLMs, it then asks them to review and rank each other's work, and finally a Chairman LLM produces the final response.
+# Resultyst LLM Council
 
-In a bit more detail, here is what happens when you submit a query:
+Resultyst LLM Council is an enhanced and extended version of the original **LLM Council** project.
+It preserves the original multi-LLM “council” idea while adding essential features required for
+continuous conversations, real-world usability, and a cleaner user experience.
 
-1. **Stage 1: First opinions**. The user query is given to all LLMs individually, and the responses are collected. The individual responses are shown in a "tab view", so that the user can inspect them all one by one.
-2. **Stage 2: Review**. Each individual LLM is given the responses of the other LLMs. Under the hood, the LLM identities are anonymized so that the LLM can't play favorites when judging their outputs. The LLM is asked to rank them in accuracy and insight.
-3. **Stage 3: Final response**. The designated Chairman of the LLM Council takes all of the model's responses and compiles them into a single final answer that is presented to the user.
+This project focuses on **context-aware multi-LLM reasoning**, **conversation management**,
+and **practical UI improvements** rather than being a one-off experiment.
 
-## Vibe Code Alert
+---
 
-This project was 99% vibe coded as a fun Saturday hack because I wanted to explore and evaluate a number of LLMs side by side in the process of [reading books together with LLMs](https://x.com/karpathy/status/1990577951671509438). It's nice and useful to see multiple responses side by side, and also the cross-opinions of all LLMs on each other's outputs. I'm not going to support it in any way, it's provided here as is for other people's inspiration and I don't intend to improve it. Code is ephemeral now and libraries are over, ask your LLM to change it in whatever way you like.
+## What Is LLM Council?
 
-## Setup
+Instead of asking a question to a single LLM, LLM Council allows you to ask **multiple LLMs at the same time**.
 
-### 1. Install Dependencies
+The flow works as follows:
 
-The project uses [uv](https://docs.astral.sh/uv/) for project management.
+### Stage 1 – First Opinions
+The user query is sent to multiple LLMs independently.
+Each model generates its own response.
 
-**Backend:**
-```bash
-uv sync
-```
+### Stage 2 – Review
+Each LLM reviews and ranks the responses from the other LLMs.
+Model identities are anonymized to reduce bias.
 
-**Frontend:**
-```bash
-cd frontend
-npm install
-cd ..
-```
+### Stage 3 – Chairman Synthesis
+A designated **Chairman LLM** combines all model responses
+into a single final answer.
 
-### 2. Configure API Key
+---
 
-Create a `.env` file in the project root:
+## Enhancements Added in This Version
 
-```bash
-OPENROUTER_API_KEY=sk-or-v1-...
-```
+This repository significantly extends the original implementation with the following changes:
 
-Get your API key at [openrouter.ai](https://openrouter.ai/). Make sure to purchase the credits you need, or sign up for automatic top up.
+### 1. Groq API Integration
+- Migrated from OpenRouter to **Groq**
+- Added a dedicated Groq client
+- Updated model configuration to Groq-hosted models
+- Improved request validation and error handling
 
-### 3. Configure Models (Optional)
+### 2. Conversation Context Awareness
+- Follow-up questions now use previous conversation history
+- Context is passed to all council stages
+- Configurable context window (recent messages only)
+- Chairman response considers full conversation context
 
-Edit `backend/config.py` to customize the council:
+### 3. Persistent Conversations
+- Conversations are saved and restored
+- Users can continue conversations without losing history
+- Clean backend storage improvements for reliability
 
-```python
-COUNCIL_MODELS = [
-    "openai/gpt-5.1",
-    "google/gemini-3-pro-preview",
-    "anthropic/claude-sonnet-4.5",
-    "x-ai/grok-4",
-]
+### 4. Conversation Title Management
+- AI-generated conversation titles
+- Manual title editing support
+- Titles update instantly in the sidebar
+- Conversations are easier to manage at scale
 
-CHAIRMAN_MODEL = "google/gemini-3-pro-preview"
-```
+### 5. Improved Chat Experience
+- Input box remains visible throughout the conversation
+- Removed first-message-only input restriction
+- Cleaner, more intuitive chat flow
 
-## Running the Application
+### 6. Sidebar & Navigation Improvements
+- Collapsible sidebar
+- Keyboard shortcut support
+- Conversation search
+- Clear conversation timestamps
 
-**Option 1: Use the start script**
-```bash
-./start.sh
-```
+### 7. Example Questions
+- Default starter prompts for new chats
+- Click-to-insert behavior
+- Faster onboarding for first-time users
 
-**Option 2: Run manually**
+### 8. Toast Notifications
+- Success, error, and info notifications
+- Visual feedback for user actions
+- Non-intrusive auto-dismiss behavior
 
-Terminal 1 (Backend):
-```bash
-uv run python -m backend.main
-```
+### 9. Backend Stability Fixes
+- Storage path corrections
+- Route ordering fixes
+- DELETE endpoint fixes
+- Improved error handling across the backend
 
-Terminal 2 (Frontend):
-```bash
-cd frontend
-npm run dev
-```
-
-Then open http://localhost:5173 in your browser.
+---
 
 ## Tech Stack
 
-- **Backend:** FastAPI (Python 3.10+), async httpx, OpenRouter API
-- **Frontend:** React + Vite, react-markdown for rendering
-- **Storage:** JSON files in `data/conversations/`
-- **Package Management:** uv for Python, npm for JavaScript
+**Backend**
+- Python
+- FastAPI
+- Groq API
+- File-based conversation storage
+
+**Frontend**
+- React
+- Vite
+- Component-based UI
+- Modern CSS
+
+---
+
+## Project Structure
+├── backend/
+│ ├── main.py
+│ ├── council.py
+│ ├── storage.py
+│ ├── groq_client.py
+│ └── config.py
+├── frontend/
+│ ├── src/
+│ │ ├── components/
+│ │ ├── App.jsx
+│ │ └── api.js
+└── README.md
+
+This project is based on the original **LLM Council** repository.
+The core idea and initial implementation belong to the original author.
+
+This version is an **independent extension** that focuses on:
+- Multi-turn conversations
+- Context-aware reasoning
+- Usability and UI improvements
+- Practical multi-LLM orchestration
+
+## Disclaimer
+
+This repository is **not officially affiliated** with the original LLM Council maintainers.
+It is provided as an experimental and educational extension.
