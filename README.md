@@ -4,7 +4,7 @@
 
 # Resultyst LLM Council
 
-Resultyst LLM Council is an enhanced and extended version of the original **LLM Council** project.
+Resultyst LLM Council is an enhanced and extended version of the original **LLM Council** (https://github.com/karpathy/llm-council) project.
 It preserves the original multi-LLM “council” idea while adding essential features required for
 continuous conversations, real-world usability, and a cleaner user experience.
 
